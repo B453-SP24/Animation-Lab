@@ -20,9 +20,13 @@ public class PlayerController : MonoBehaviour
     // Reference to the current door the player is standing next to (if any).
     GameObject door;
 
+    Animator anim;
+    bool isWalking = true;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
     }
 
     void Update()
@@ -38,6 +42,17 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E) && isNearDoor == true && door != null)
         {
             InteractDoor();
+        }
+
+        if (isWalking && Input.GetKeyDown(KeyCode.Q))
+        {
+            anim.SetTrigger("StopWalking");
+            isWalking = false;
+        }
+        else if (!isWalking && Input.GetKeyDown(KeyCode.Q))
+        {
+            anim.SetTrigger("StartWalking");
+            isWalking = true;
         }
     }
 
